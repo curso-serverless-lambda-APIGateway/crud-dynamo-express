@@ -10,14 +10,14 @@
 8. [Trabajar con DynamoDB en local](#dynamoOffline)
 
 <a name="install"></a>
-## Instalación de express y serverless-http
+## 1. Instalación de express y serverless-http
 
 Utilizaremos express y serverless-http para gestionar las llamadas http a nuestra lambda
 
 `npm install --save express serverless-http`
 
 <a name="newRoute"></a>
-## Creación básica de una ruta
+## 2. Creación básica de una ruta
 
 ~~~
 'use strict';
@@ -34,7 +34,7 @@ module.exports.generic = serverless(app)
 ~~~
 
 <a name="dynamo"></a>
-## Configuración para utilizar DynamoDB
+## 3. Configuración para utilizar DynamoDB
 
 Para garantizar el acceso de la lambda a DynamoDB debemos configurar el archivo **serverless.yml**
 
@@ -90,7 +90,7 @@ resources:
 ~~~
 
 <a name="install2"></a>
-## Instalación y configuración de dynamoDB y body-parser
+## 4. Instalación y configuración de dynamoDB y body-parser
 
 Instalamos el sdk de AWS y body-parser mediante npm
 
@@ -108,7 +108,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 ~~~
 
 <a name="post"></a>
-## Inserción de un nuevo registro
+## 5. Inserción de un nuevo registro
 
 En el archivo **handler.js** obtenemos el nombre de la tabla de la variable de entorno:
 
@@ -143,7 +143,7 @@ app.post('/users', (req, res) => {
 ~~~
 
 <a name="getAll"></a>
-## Recuperar todos los registros
+## 6. Recuperar todos los registros
 
 Para obtener todos los registros de dynamo, creamos una nueva ruta:
 
@@ -171,7 +171,7 @@ app.get('/users', (req, res) => {
 ~~~
 
 <a name="getOne"></a>
-## Recuperar un registro
+## 7. Recuperar un registro
 
 Para obtener un registro en concreto, creamos la nueva ruta:
 
@@ -204,7 +204,7 @@ app.get('/users/:userId', (req, res) => {
 ~~~
 
 <a name="dynamoOffline"></a>
-## Trabajar con DynamoDB en local
+## 8. Trabajar con DynamoDB en local
 
 Para poder trabajar en local debemos instalar serverless-offline y serverles-dynamodb-local
 
