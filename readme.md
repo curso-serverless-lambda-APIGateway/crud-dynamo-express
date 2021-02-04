@@ -25,7 +25,7 @@ Utilizaremos express y serverless-http para gestionar las llamadas http a nuestr
 
 ## 2. Creación básica de una ruta
 
-~~~
+~~~js
 'use strict';
 
 const serverless = require('serverless-http');
@@ -49,14 +49,14 @@ Para garantizar el acceso de la lambda a DynamoDB debemos configurar el archivo 
 
 1. Definimos el nombre de la tabla que vamos a utilizar
 
-~~~
+~~~yml
 custom:
   tableName: 'users-table-${self:provider.stage}'
 ~~~
 
 2. Habilitamos permisos para que la lambda pueda interactuar con DynamoDB
 
-~~~
+~~~yml
 provider:
   name: aws
   runtime: nodejs12.x
@@ -78,7 +78,7 @@ provider:
 
 3. Definimos la tabla
 
-~~~
+~~~yml
 resources:
   Resources:
     UsersDynamoDBTable:
@@ -110,7 +110,7 @@ Instalamos el sdk de AWS y body-parser mediante npm
 
 En el archivo **handler.js** establecemos las constantes para poder utilizar estas librerías
 
-~~~
+~~~js
 const AWS = require('aws-sdk');
 const bodyParser = require('body-parser');
 
@@ -127,13 +127,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 En el archivo **handler.js** obtenemos el nombre de la tabla de la variable de entorno:
 
-~~~
+~~~js
 const USERS_TABLE = process.env.USERS_TABLE;
 ~~~
 
 modificamos el post para insertar el nuevo registro en la tabla
 
-~~~
+~~~js
 app.post('/users', (req, res) => {
   const {userId, name} = req.body;
 
@@ -165,7 +165,7 @@ app.post('/users', (req, res) => {
 
 Para obtener todos los registros de dynamo, creamos una nueva ruta:
 
-~~~
+~~~js
 app.get('/users', (req, res) => {
   const params = {
     TableName: USERS_TABLE,
@@ -196,7 +196,7 @@ app.get('/users', (req, res) => {
 
 Para obtener un registro en concreto, creamos la nueva ruta:
 
-~~~
+~~~js
 app.get('/users/:userId', (req, res) => {
   const params = {
     TableName: USERS_TABLE,
@@ -236,7 +236,7 @@ Para poder trabajar en local debemos instalar serverless-offline y serverles-dyn
 
 Dentro del archivo **serverless.yml** debemos modificar la seccion *custom* y añadir la sección *plugins*:
 
-~~~
+~~~yml
 plugins:
   - serverless-offline
   - serverless-dynamodb-local
@@ -252,7 +252,7 @@ custom:
 
 También modificaremos el archivo **handler.js** para que en el caso en el que trabajemos en modo local la relación a la base de datos sea correcta.
 
-~~~
+~~~js
 const USERS_TABLE = process.env.USERS_TABLE;
 const IS_OFFLINE = process.env.IS_OFFLINE;
 
